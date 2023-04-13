@@ -17,7 +17,6 @@ namespace Futbol.Controllers
             return View(equipos);
         }
 
-        [HttpGet]
         public IActionResult Crear()
         {
             return View();
@@ -41,6 +40,7 @@ namespace Futbol.Controllers
                 }
             }
             equipo.Ligas = li;
+            equipo.Puntos = 0;
 
             var response = await client.PostAsJsonAsync("http://localhost:5079/api/equipos", equipo );
             if (response.IsSuccessStatusCode)
@@ -60,7 +60,8 @@ namespace Futbol.Controllers
             return View();
         }
 
-        public IActionResult Index()
+
+        public IActionResult Torneo()
         {
             return View();
         }

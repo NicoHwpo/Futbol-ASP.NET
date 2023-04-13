@@ -23,5 +23,8 @@ namespace Futbol.Models
 
         [BsonElement("ligas")]
         public string[]? Ligas { get; set; }
+
+        [BsonElement("puntos")]
+        public int Puntos { get; set; }
     }
 }

@@ -1,7 +1,59 @@
 ﻿@model List<Equipo>
 
-@foreach (var item in Model)
-{
-    <p>@item.Nombre</p>
-    <p>@item.Ciudad</p>
-}
+    <table class="table">
+        <thead>
+            <tr>
+            <th scope="col">
+                Posicion
+                </th>
+            <th scope="col">Puntos</th>
+
+                <th scope="col">
+                    Nombre
+                </th>
+            <th scope="col">
+                    Ciudad
+                </th>
+            <th scope="col">
+                    Estadio
+                </th>
+            <th scope="col">
+                    Entrenador
+                </th>
+            <th scope="col">
+                    Ligas
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                var i = 0;
+            }
+            @foreach (var item in Model)
+            {
+                i++;
+                <tr>
+                    <th scope="row">@i</th>
+                    <td scope="row">@item.Puntos</td>
+
+                    <td>
+                        @item.Nombre
+                    </td>
+                    <td>
+                        @item.Ciudad
+                    </td>
+                    <td>
+                        @item.Estadio
+                    </td>
+                    <td>
+                        @item.Entrenador
+                    </td>
+                    <td style="overflow-y : auto; display:block; max-height: 8vh">
+                    @foreach(var liga in @item.Ligas)
+                    {
+                        @liga <br />
+                    }
+                </td>
+                </tr>
+            }
+        </tbody>

@@ -18,7 +18,7 @@ namespace Futbol.Services
 
         public async Task<List<Equipo>> GetAll()
         {
-            return await _equipo.Find(Equipo => true).ToListAsync();
+            return await _equipo.Find(Equipo => true).Sort(Builders<Equipo>.Sort.Descending("puntos")).ToListAsync();
         }
         public async Task<Equipo> Get(string id)
         {

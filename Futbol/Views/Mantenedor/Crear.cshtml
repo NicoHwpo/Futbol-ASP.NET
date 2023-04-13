@@ -7,33 +7,29 @@
 <form method="post">
     <div class="form-group">
         <label asp-for="Nombre">Nombre</label>
-        <input asp-for="Nombre" class="form-control" />
+        <input asp-for="Nombre" class="form-control" required />
     </div>
 
     <div class="form-group">
         <label asp-for="Ciudad">Ciudad</label>
-        <input asp-for="Ciudad" class="form-control" />
+        <input asp-for="Ciudad" class="form-control" required />
     </div>
 
     <div class="form-group">
         <label asp-for="Estadio">Estadio</label>
-        <input asp-for="Estadio" class="form-control" />
+        <input asp-for="Estadio" class="form-control" required  />
     </div>
 
     <div class="form-group">
         <label asp-for="Entrenador">Entrenador</label>
-        <input asp-for="Entrenador" class="form-control" />
+        <input asp-for="Entrenador" class="form-control" required />
     </div>
-
-    <!-- Campo de entrada de texto para las ligas -->
-    
-   
 
     <!-- Lista de ligas agregadas -->
     <div class="form-group">
             <div class="form-group">
-                <label asp-for="Ligas">Ligas</label>
-                <input asp-for="Ligas" class="form-control" multiple />
+                <label asp-for="Ligas">Ligas En las que Juega</label>
+            <input asp-for="Ligas" class="form-control" multiple required />
             </div>
 
     </div>

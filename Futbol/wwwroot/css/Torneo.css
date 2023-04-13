@@ -1,0 +1,52 @@
+﻿.tournament-bracket {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.round {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    border: 2px solid black;
+    width: 200px;
+}
+
+.team {
+    padding: 5px;
+    width: 100%;
+    text-align: center;
+}
+
+.team-top {
+    border-bottom: 1px solid black !important;
+}
+
+.team-bottom {
+    border-top: 1px solid black !important;
+}
+
+.round-2 .game-3 .team-top,
+.round-2 .game-3 .team-bottom {
+    border: none;
+}
+
+.round-3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .round-3 .game-4 {
+        border: none;
+    }
