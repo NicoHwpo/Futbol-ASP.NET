@@ -34,7 +34,7 @@ namespace Futbol.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(Equipo equipo)
+        public async Task<IActionResult> Create([FromBody] Equipo equipo)
         {
             await _equipoService.Create(equipo);
             return Ok(equipo);
