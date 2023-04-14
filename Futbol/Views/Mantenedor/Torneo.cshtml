@@ -1,36 +1,205 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+﻿@model List<Equipo>
 <head>
     <link rel="stylesheet" href="~/css/Torneo.css" asp-append-version="true" />
+
+    <script>
+        function myFunction() {
+            if (@Model.Count <8) {
+                document.getElementById("Error").innerHTML = "Error hay " + @Model.Count();
+            }
+
+        }
+
+        function animateBackground() {
+            var div = document.getElementById("winnerTeam");
+            var colors = ["red", "orange", "yellow", "green", "blue", "indigo", "violet"];
+            var currentColorIndex = 0;
+
+            var intervalId = setInterval(function () {
+                div.style.backgroundColor = colors[currentColorIndex];
+                currentColorIndex++;
+                if (currentColorIndex === colors.length) {
+                    currentColorIndex = 0;
+                }
+            }, 400);
+        }
+
+
+        function updateTeams() {
+            var btn = document.getElementById("resultadosBtn");
+            btn.style.display = "none";
+            var dev = document.getElementById("return");
+            dev.style.display = "block";
+            // Loop through each game in the first round
+            var games = document.querySelectorAll('.game');
+            var winners = [];
+            for (var i = 0; i < 4; i++) {
+                var topTeam = games[i].querySelector('.team-top');
+                var bottomTeam = games[i].querySelector('.team-bottom');
+                var topScore = Math.floor(Math.random() * 6);
+                var bottomScore = Math.floor(Math.random() * 6);
+                while (topScore == bottomScore) {
+                    bottomScore = Math.floor(Math.random() * 6);
+                }
+                topTeam.innerHTML += ' ' + topScore;
+                bottomTeam.innerHTML += ' ' + bottomScore;
+                
+                if (topScore > bottomScore) {
+                    winners.push(topTeam);
+                } else {
+                    winners.push(bottomTeam);
+                }
+            }
+
+            var g = true;
+            var h = 5;
+            var finals = [];
+            for(var i = 0; i < 4; i+=2) {
+                var top = document.querySelector(`.game-${h}`).querySelector('.team-top');
+                var bottom = document.querySelector(`.game-${h}`).querySelector('.team-bottom');
+                var topTeam = winners[i].innerHTML.slice(0, -2);
+                var bottomTeam = winners[i + 1].innerHTML.slice(0, -2);
+                var topScore = Math.floor(Math.random() * 6);
+                var bottomScore = Math.floor(Math.random() * 6);
+                while (topScore == bottomScore) {
+                    bottomScore = Math.floor(Math.random() * 6);
+                }
+                top.innerHTML = topTeam + ' ' + topScore;
+                bottom.innerHTML = bottomTeam + ' ' + bottomScore;
+                if (topScore > bottomScore) {
+                    finals.push(winners[i]);
+                } else {
+                    finals.push(winners[i+1]);
+                }
+                h++;
+            }
+
+            var winner;
+            for (var i = 0; i < 2; i += 2) {
+                var top = document.querySelector(`.game-${h}`).querySelector('.team-top');
+                var bottom = document.querySelector(`.game-${h}`).querySelector('.team-bottom');
+                var topTeam = finals[i].innerHTML.slice(0, -2);
+                var bottomTeam = finals[i + 1].innerHTML.slice(0, -2);
+                var topScore = Math.floor(Math.random() * 6);
+                var bottomScore = Math.floor(Math.random() * 6);
+                while (topScore == bottomScore) {
+                    bottomScore = Math.floor(Math.random() * 6);
+                }
+                top.innerHTML = topTeam + ' ' + topScore;
+                bottom.innerHTML = bottomTeam + ' ' + bottomScore;
+                if (topScore > bottomScore) {
+                    winner = finals[i];
+                } else {
+                    winner = finals[i+1];
+                }
+                h++;
+            }
+
+            var top = document.querySelector(`.game-${h}`).querySelector('.team-top');
+            top.innerHTML = winner.innerHTML.slice(0, -2).toUpperCase() + ' +3PTS';
+            document.getElementById("winnerId").value = winner.id;
+            animateBackground();
+        }
+
+
+    </script>
 </head>
+
+
 <body>
     <div class="row">
-    <div class="tournament-bracket">
+        <h1>TORNEO</h1>
+        <p>Torneos con 8 equipos aleatorios. Ganadores +3 puntos, perdedores -1 punto.</p>
+        <div class="row">
+            <h3 class="mt-2">Equipos A competir</h3>
+            @foreach (var team in Model)
+            {
+                <div class="col text-center border">
+                    @team.Nombre
+                </div>
+            }
+        </div>
         
-        <div class="round round-1">
-            <h1>Round 1</h1>
-            <div class="game game-1">
-                <div class="team team-top">Team 1</div>
-                <div class="team team-bottom">Team 4</div>
-            </div>
-            <div class="game game-2">
-                <div class="team team-top">Team 2</div>
-                <div class="team team-bottom">Team 3</div>
-            </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4 text-center mx-auto">
+            <button type="button" class="my-4  btn-success" onclick="updateTeams()" id="resultadosBtn">Generar Resultados</button>
+            <p style="display:none" class="my-4" id="return"><a href="@Url.Action("Listar", "Mantenedor")">Ver Lista</a> o <a href="@Url.Action("Torneo", "Mantenedor")">Vuelve a hacer otro torneo</a></p>
+
         </div>
-        <div class="round round-2">
-        <h1 >Round 2</h1>
-            <div class="game game-3">
-                <div class="team team-top">Winner Game 1</div>
-                <div class="team team-bottom">Winner Game 2</div>
+    </div>
+        
+        <div id="Error"></div>
+    <div class="row">
+
+        <div class="tournament-bracket">
+            <div class="round round-1">
+                <h2>Cuartos de Final</h2>
+                <div class="game game-1">
+                    <div class="team team-top" id="@Model[0].Id">@Model[0].Nombre</div>
+                    <div class="team team-bottom" id="@Model[1].Id">@Model[1].Nombre</div>
+                </div>                                
+                <div class="game game-2">
+                    <div class="team team-top" id="@Model[2].Id">@Model[2].Nombre</div>
+                    <div class="team team-bottom" id="@Model[3].Id">@Model[3].Nombre</div>
+                </div>
+                <div class="game game-3">
+                    <div class="team team-top" id="@Model[4].Id">@Model[4].Nombre</div>
+                    <div class="team team-bottom" id="@Model[5].Id">@Model[5].Nombre</div>
+                </div>
+                <div class="game game-4">
+                    <div class="team team-top" id="@Model[6].Id">@Model[6].Nombre</div>
+                    <div class="team team-bottom" id="@Model[7].Id">@Model[7].Nombre</div>
+                </div>
             </div>
-        </div>
-        <div class="round round-3">
-            <h1>Round 3</h1>
-            <div class="game game-4">
-                <div class="team team-top">Tournament Winner</div>
+            <div class="round round-2">
+                <h2>Semifinal</h2>
+                <div class="game game-5">
+                    <div class="team team-top" id="semifinal1Team1">Winner Game 1</div>
+                    <div class="team team-bottom" id="semifinal1Team2">Winner Game 2</div>
+                </div>
+                <br />
+                <br />
+                <br />
+                <div class="game game-6">
+                    <div class="team team-top" id="semifinal2Team1">Winner Game 3</div>
+                    <div class="team team-bottom" id="semifinal2Team2">Winner Game 4</div>
+                </div>
+            </div>
+            <div class="round round-3">
+                <h2>Final</h2>
+                <div class="game game-7">
+                    <div class="team team-top" id="finalTeam1">Winner Game 5</div>
+                    <div class="team team-bottom" id="finalTeam2">Winner Game 6</div>
+                </div>
+            </div>
+            <div class="round round-4">
+                <h2>Campeones</h2>
+                <div class="game game-8">
+                    <div class="team team-top" id="winnerTeam">Tournament Winner</div>
+                </div>
             </div>
         </div>
     </div>
+
+  
+    @{
+        var equipoIds = new List<string>();
+        foreach (var equipo in Model)
+        {
+            equipoIds.Add(equipo.Id);
+        }
+    }
+    <div class="row">
+        <div class="col-md-4 text-center mx-auto">
+            <form method="post" action="@Url.Action("ActualizarPuntos", "Mantenedor")">
+                <input type="hidden" name="equipoIds" value="@string.Join(",", equipoIds)" />
+                <input type="hidden" name="winnerId" id="winnerId" />
+                <button type="submit">Actualizar PUNTOS</button>
+            </form>
+        </div>
     </div>
+    
+    
 </body>

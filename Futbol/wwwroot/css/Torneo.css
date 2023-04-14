@@ -2,7 +2,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
     font-family: Arial, sans-serif;
 }
 
@@ -36,17 +35,24 @@
     border-top: 1px solid black !important;
 }
 
-.round-2 .game-3 .team-top,
-.round-2 .game-3 .team-bottom {
+.round-2 .game-5 .team-top,
+.round-2 .game-5 .team-bottom,
+.round-2 .game-6 .team-top,
+.round-2 .game-6 .team-bottom {
     border: none;
 }
 
-.round-3 {
+.round-3 .game-7 .team-top,
+.round-3 .game-7 .team-bottom {
+    border: none;
+}
+
+.round-4 {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-    .round-3 .game-4 {
+    .round-4 .game-8 {
         border: none;
     }

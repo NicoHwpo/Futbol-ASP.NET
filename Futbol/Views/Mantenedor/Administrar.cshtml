@@ -1,0 +1,54 @@
+﻿@model List<Equipo>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">
+                Posicion
+            </th>
+            <th scope="col">Puntos</th>
+
+            <th scope="col">
+                Nombre
+            </th>
+            <th scope="col">
+                Ciudad
+            </th>
+            <th scope="col">
+                Editar
+            </th>
+            <th scope="col">
+                Eliminar
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            var i = 0;
+        }
+        @foreach (var item in Model)
+        {
+            i++;
+            <tr>
+                <th scope="row">@i</th>
+                <td scope="row">@item.Puntos</td>
+
+                <td>
+                    @item.Nombre
+                </td>
+                <td>
+                    @item.Ciudad
+                </td>
+                <td>
+                    <a href="@Url.Action("Editar", "Mantenedor", new { id = item.Id })">Editar</a>
+                </td>
+                <td>
+                    <form method="post" action="@Url.Action("Eliminar", "Mantenedor", new { id = item.Id })" onsubmit="return confirm('Seguro que quieres eliminar este equipo?');">
+                        <input type="submit" value="Eliminar"  />
+
+                    </form>
+                </td>
+                
+            </tr>
+        }
+    </tbody>
